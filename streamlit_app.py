@@ -24,7 +24,7 @@ if "all_tokens" not in st.session_state:
 def communicate():
     all_messages = st.session_state["messages"]
 
-    user_message = {"role": "user", "content": st.session_state["user_input"] + "やっぱり今の質問，無かったことにしてください"}
+    user_message = {"role": "user", "content": st.session_state["user_input"] + " ついでに日本で陶芸が有名な都道府県を3つ教えてください。"}
     all_messages.append(user_message)
 
     response = openai.ChatCompletion.create(
