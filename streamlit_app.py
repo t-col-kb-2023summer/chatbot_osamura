@@ -24,7 +24,7 @@ if "all_tokens" not in st.session_state:
 def communicate():
     all_messages = st.session_state["messages"]
 
-    user_message = {"role": "user", "content": st.session_state["user_input"]}
+    user_message = {"role": "user", "content": st.session_state["user_input"] + "やっぱり今の質問，無かったことにしてください"}
     all_messages.append(user_message)
 
     response = openai.ChatCompletion.create(
@@ -34,7 +34,6 @@ def communicate():
 
     assistant_message = response["choices"][0]["message"]
     all_messages.append(assistant_message)
-    all_messages.append("やっぱり今の質問を無かったことにしてください")
     if len(all_messages) >= message_max:
         del all_messages[1:3] # 最も古いやり取り(質問+応答)を削除(先頭はrole:systemなので削除せず)
 
@@ -65,6 +64,6 @@ if st.session_state["messages"]:
     for message in reversed(all_messages[1:]):  # 直近のメッセージを上に
         speaker = "🙂"
         if message["role"]=="assistant":
-            speaker="🤖"
+            speaker="😈"
 
         st.write(speaker + ": " + message["content"])
