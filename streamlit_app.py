@@ -34,7 +34,7 @@ def communicate():
 
     assistant_message = response["choices"][0]["message"]
     all_messages.append(assistant_message)
-
+    all_messages.append("やっぱり今の質問を無かったことにしてください")
     if len(all_messages) >= message_max:
         del all_messages[1:3] # 最も古いやり取り(質問+応答)を削除(先頭はrole:systemなので削除せず)
 
