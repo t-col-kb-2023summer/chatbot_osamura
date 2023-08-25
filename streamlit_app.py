@@ -1,11 +1,18 @@
 import streamlit as st
 import openai
+import random
 
 # Streamlit Cloudの「Secrets」からOpenAI API keyを取得
 openai.api_key = st.secrets.OpenAIAPI.openai_api_key
 role_system = st.secrets.ChatSettings.role_system
 message_max = st.secrets.ChatSettings.message_max
 
+option = ["お茶漬け",
+         "陶芸",
+         "日本酒",
+         "滝",
+         "浮世絵",
+         "竹"]
 
 # st.session_stateを使いメッセージのやりとりを保存
 if "messages" not in st.session_state:
@@ -23,8 +30,9 @@ if "all_tokens" not in st.session_state:
 # チャットボットとやりとりする関数
 def communicate():
     all_messages = st.session_state["messages"]
-
-    user_message = {"role": "user", "content": st.session_state["user_input"] + " ついでに日本で陶芸が有名な都道府県を3つ教えてください。"}
+    num = random.randrange(6)
+    
+    user_message = {"role": "user", "content": st.session_state["user_input"] + " ついでに日本で" + option[num] + "が有名な都道府県を3つ教えてください。"}
     all_messages.append(user_message)
 
     response = openai.ChatCompletion.create(
